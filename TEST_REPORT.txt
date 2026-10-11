@@ -1,0 +1,45 @@
+BUGBREAK — UPDATE 2: STORMFRONT
+QA REPORT
+
+RESULT: PASS for the tested core flows.
+
+Runtime / package
+- data.js, ui.js, game.js, enemy-mode.js and audio.js pass Node syntax validation.
+- Full build has no network.js, PeerJS, or multiplayer dependency.
+- All referenced Stormfront music/SFX files are included locally.
+- Flat package: no nested folders.
+
+Save migration
+- Update 1.x / 1.2.x save key remains: bugbreak-update1-save.
+- Simulated v11 save migrated to v12 without losing Gems, lifetime Gems, Candy, Normal/Hard best waves, Halloween/Harvest unlocks, upgrades, or owner custom bugs.
+- New Stormfront values default safely to 0/false for older saves.
+
+Stormfront
+- Permanent mode ID: storm; 30 waves.
+- 8 Stormfront-exclusive standard enemies.
+- Wave 10: Flood Widow.
+- Wave 20: Thunder Mantis.
+- Wave 30: Tempest Monarch final boss.
+- Stormfront lightning hazards render and use local thunder SFX.
+- Storm Shards persist and can buy 4 permanent Storm Evolution upgrades.
+- Stormfront victory unlocks Stormglass Dragonfly permanently and records bestStorm=30.
+
+Enemy Mode
+- Stormfront launches in Enemy Mode.
+- Stormfront has permanent Gem enemy ownership, Enemy Level requirements and wave gates.
+- Owner override can force Tempest Monarch on Wave 1 after Owner Access is unlocked.
+- Existing smart defender scaling/evolution system remains active.
+
+Content
+- 14 playable insects total.
+- New playable Bombardier Beetle.
+- New unlockable Stormglass Dragonfly.
+- 6 new storm mutations.
+- 4 new storm relics.
+- 2 new permanent standard upgrades.
+- 4 Storm Shard upgrades.
+- 6 original Stormfront music tracks plus thunder SFX.
+
+Mobile
+- Tested at 1024x768 touch-style viewport.
+- Captured current-build QA screenshots for menu, Stormfront, Flood Widow, Tempest Monarch, Storm Evolution shop and Stormfront Enemy Mode.

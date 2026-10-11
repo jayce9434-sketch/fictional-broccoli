@@ -1,0 +1,32 @@
+BUGBREAK — UPDATE 2: STORMFRONT
+
+NEW PERMANENT MODE
+- STORMFRONT: 30 waves of rain, flooding, thunder and lightning hazards.
+- Three Stormfront biomes: Rain-Soaked Lawn, Flooded Flower Bed, Tempest Porch.
+- Eight Stormfront-exclusive enemy species.
+- Flood Widow at Wave 10, Thunder Mantis at Wave 20, Tempest Monarch final at Wave 30.
+- Six original Stormfront music tracks plus thunder SFX.
+
+NEW PLAYABLE BUGS
+- Bombardier Beetle — Chemical Artillery. Boiling Volley fires a caustic spread and burning pools.
+- Stormglass Dragonfly — Tempest Champion. Beat Stormfront to unlock permanently. Thunder Lance teleports through a lightning line and chains damage.
+
+NEW PROGRESSION
+- Storm Shards are earned in Stormfront and saved permanently.
+- Four permanent Storm Evolution upgrades: Conductive Shell, Rainrunner Legs, Cloudheart, Lightning Rod Nest.
+- Two additional permanent upgrades: Storm Capacitor and Weathered Chitin.
+- Six new storm mutations and four new storm relics.
+
+ENEMY MODE
+- Stormfront is fully supported in Enemy Mode.
+- Storm-exclusive enemies and bosses have permanent Gem ownership, Enemy Level requirements and wave gates.
+- Tempest Monarch is the Stormfront final enemy class.
+- Owner enemy override still bypasses wave/ownership gates after Owner Access is unlocked.
+
+OWNER / CREATOR
+- Owner Access, Create Bug (30 saves), owner wave control and owner enemy override all remain.
+- Owner tools include Storm Shards, Storm upgrades and Stormfront completion controls.
+
+SAVE COMPATIBILITY
+- The game still uses the same localStorage key: bugbreak-update1-save
+- Existing Update 1 / 1.2.x saves migrate forward with Stormfront fields added safely.

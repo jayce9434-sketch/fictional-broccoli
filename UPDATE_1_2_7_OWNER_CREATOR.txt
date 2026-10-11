@@ -1,0 +1,9 @@
+BUGBREAK UPDATE 1.2.7 — OWNER CREATOR
+
+- Owner Enemy Override: become any enemy in Enemy Mode at any current wave, ignoring ownership, Enemy Level and wave gates.
+- Create Bug studio inside Owner Access.
+- Up to 30 persistent custom bug saves.
+- Custom body/head shapes, wing styles, leg pairs, antennae, primary/secondary colors, gradient, transparency and scale.
+- Custom HP, damage, speed, crit, cooldown, ability preset, ability name and description.
+- Custom bugs are only listed/equippable after Owner Access is unlocked.
+- Same existing bugbreak-update1-save key.

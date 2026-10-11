@@ -1,0 +1,12 @@
+BUGBREAK Update 1.2.5 — Owner Tools
+
+- Code-gated Owner Menu added under Settings.
+- Owner code is verified against a SHA-256 digest; the plaintext code is not stored in the game files.
+- Owner grants: add/set Gems, add/set Candy, set Enemy Level, add/set Enemy XP.
+- Unlock individual/all event reward insects.
+- Unlock every Enemy Mode class across Normal, Halloween, and Harvest.
+- Max or reset permanent upgrades; max Halloween upgrades.
+- Mark Normal, Hard, Halloween, or Harvest as cleared.
+- GIVE EVERYTHING quick action.
+- All changes save immediately to the existing bugbreak-update1-save key.
+- Existing player data remains compatible.

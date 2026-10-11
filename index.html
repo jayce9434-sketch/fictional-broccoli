@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#080d10" />
+  <title>BUGBREAK: Colony Siege — Update 2 Stormfront</title>
+  <link rel="stylesheet" href="style.css?v=200" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+</head>
+<body>
+<div id="app">
+  <canvas id="game" width="1280" height="720" aria-label="BUGBREAK game canvas"></canvas>
+  <div id="vignette"></div><div id="grain"></div><div id="toast" aria-live="polite"></div>
+
+  <section id="menu" class="screen active">
+    <div class="menu-shell">
+      <div class="menu-card glass hero-card">
+        <div class="brand-row">
+          <img class="brand-icon" src="icon-192.png" alt="BUGBREAK app icon" />
+          <div class="brand-copy"><div class="eyebrow">UPDATE 2 · STORMFRONT</div><h1><span>BUG</span>BREAK</h1><h2>COLONY SIEGE</h2></div>
+          <div class="live-stack"><span id="halloweenLivePill" class="live-pill haunt">HALLOWEEN LIVE</span><span id="autumnLivePill" class="live-pill autumn">HARVEST LIVE</span></div>
+        </div>
+        <p class="hero-copy"><b>UPDATE 2:</b> STORMFRONT adds a permanent 30-wave thunderstorm campaign, Storm Shards, lightning hazards, 8 storm predators, 3 storm bosses, new evolution, Bombardier Beetle and the Stormglass Dragonfly reward.</p>
+
+
+        <div class="section-kicker">PLAY AS</div>
+        <div id="sideSelect" class="side-select"><button id="defenderSideBtn" class="selected"><b>COLONY DEFENDER</b><small>Protect the nest</small></button><button id="enemySideBtn"><b>ENEMY MODE</b><small>Break the colony with progression</small></button></div>
+
+        <div class="section-kicker">CHOOSE MODE</div>
+        <div id="modeSelect" class="mode-select"></div>
+        <div class="mode-summary"><b id="modeWave">50 WAVES</b><span id="modeSummary">Select a mode.</span></div>
+
+        <div id="defenderLoadout">
+          <div class="section-kicker">CHOOSE YOUR INSECT</div>
+          <div class="bug-select" id="bugSelect"></div>
+          <div id="bugDetail" class="bug-detail"></div>
+        </div>
+        <div id="enemyLoadout" class="hidden">
+          <div class="enemy-loadout-head"><div class="section-kicker">CHOOSE YOUR ENEMY</div><button id="inlineEnemyShopBtn" class="enemy-market-btn" type="button">ENEMY MARKET</button></div>
+          <div class="enemy-progress"><span>ENEMY LEVEL <b id="enemyLevelText">1</b></span><span>XP <b id="enemyXpText">0 / 100</b></span><span>Owned <b id="enemyOwnedText">1</b></span></div>
+          <div id="enemySelect" class="enemy-select"></div>
+          <div id="enemyDetail" class="bug-detail"></div>
+        </div>
+
+        <div class="menu-actions"><button id="playBtn" class="primary big">START EXPEDITION</button><button id="shopBtn">UPGRADES</button><button id="enemyShopBtn" class="hidden">ENEMY SHOP</button><button id="settingsBtn">SETTINGS</button></div>
+        <div id="dailyCard" class="daily-card"></div>
+        <div class="meta-row"><span>Best <b id="bestWave">0</b>/50</span><span>Hard <b id="bestHard">0</b>/50</span><span>Storm <b id="bestStorm">0</b>/30</span><span>Gems <b id="menuGems">0</b></span><span>Shards <b id="menuStormShards">0</b></span><span id="candyMeta">Candy <b id="menuCandy">0</b></span><span>Roster <b id="rosterCount">10/14</b></span><span>Enemy Lv <b id="enemyMetaLevel">1</b></span><button id="resetBtn" class="text-btn">Reset save</button></div>
+      </div>
+      <aside class="feature-rail glass"><div class="feature-storm"><small>UPDATE 2</small><b>STORMFRONT</b><span>30 waves · lightning hazards · 8 exclusive predators · 3 bosses · Stormglass Dragonfly</span></div>
+        <div class="feature-night"><small>HARD MODE</small><b>NIGHT</b><span>Every enemy has Nightmare stats and a redesigned night form.</span></div>
+        <div class="feature-haunt"><small>HALLOWEEN</small><b>20</b><span>waves · 2 bosses · 1 final boss · Ghost Moth reward</span></div>
+        <div><small>ENEMIES</small><b>20 + 5</b><span>regular predators plus Boss1 through Boss5 class enemies</span></div>
+        <div><small>PLAYABLE</small><b>14</b><span>Bombardier Beetle + Stormglass Dragonfly join the roster</span></div>
+      <div><small>ENEMY MODE</small><b>XP</b><span>Own enemies permanently · level up · obey wave gates · smart defender bots</span></div></aside>
+    </div>
+    <button id="mobileEnemyStart" class="mobile-enemy-start primary hidden" type="button">INVADE COLONY</button>
+    <div class="tip glass">WASD / arrows move · SPACE bite · SHIFT dash · E special · R repair · mobile controls included</div>
+  </section>
+
+  <section id="shop" class="screen"><div class="panel glass wide">
+    <div class="panel-head"><div><div class="eyebrow">Permanent colony evolution</div><h3>UPGRADES</h3></div><button data-close="shop" class="icon-btn">✕</button></div>
+    <div class="currency-ribbon"><span>Gems <b id="shopGems">0</b></span><span>Candy <b id="shopCandy">0</b></span><span>Storm Shards <b id="shopStormShards">0</b></span></div>
+    <div id="upgradeGrid" class="upgrade-grid"></div>
+    <div id="seasonalShop" class="seasonal-shop">
+      <div class="season-head"><div><small>LIMITED HALLOWEEN EVOLUTION</small><h3>HAUNTED UPGRADES</h3></div><span>These bonuses work while Halloween is live. Their ranks and Candy are removed automatically when the Halloween event ends.</span></div>
+      <div id="halloweenUpgradeGrid" class="upgrade-grid"></div>
+    </div>
+    <div class="seasonal-shop storm-shop"><div class="season-head"><div><small>UPDATE 2 · PERMANENT</small><h3>STORM EVOLUTION</h3></div><span>Earn Storm Shards in Stormfront. These upgrades are permanent and affect every mode.</span></div><div id="stormUpgradeGrid" class="upgrade-grid"></div></div>
+  </div></section>
+
+  <section id="enemyShop" class="screen"><div class="panel glass wide enemy-shop-panel">
+    <div class="panel-head"><div><div class="eyebrow">Permanent Enemy Mode collection</div><h3>ENEMY SHOP</h3></div><button id="enemyShopClose" class="icon-btn">✕</button></div>
+    <div class="enemy-shop-head"><span>Gems <b id="enemyShopGems">0</b></span><span>Enemy Level <b id="enemyShopLevel">1</b></span><span id="enemyShopMode">NORMAL</span></div>
+    <p class="subcopy">Buy an enemy once with Gems and keep it permanently. You still need the required Enemy Level and current wave before you can spawn as it. Event enemies stay inside their own event mode.</p>
+    <div id="enemyShopGrid" class="enemy-shop-grid"></div>
+  </div></section>
+
+  <section id="levelup" class="screen"><div class="panel glass choice-panel"><div class="eyebrow">DNA mutation available</div><h3>CHOOSE A MUTATION</h3><p class="subcopy">Mutations alter your stats and visibly mutate your insect for the rest of the run.</p><div id="cards" class="cards"></div></div></section>
+  <section id="relic" class="screen"><div class="panel glass choice-panel"><div class="eyebrow">Boss relic recovered</div><h3>CHOOSE A RELIC</h3><p class="subcopy">Relics change your build and add visible relic effects to your insect.</p><div id="relicCards" class="cards"></div></div></section>
+  <section id="pause" class="screen"><div class="panel glass small"><div class="eyebrow">Expedition paused</div><h3>PAUSED</h3><button id="resumeBtn" class="primary">RESUME</button><button id="pauseShopBtn">UPGRADES</button><button id="pauseSettingsBtn">SETTINGS</button><button id="quitBtn">QUIT RUN</button></div></section>
+
+  <section id="settings" class="screen"><div class="panel glass settings-panel">
+    <div class="panel-head"><div><div class="eyebrow">Audio & gameplay</div><h3>SETTINGS</h3></div><button id="settingsClose" class="icon-btn">✕</button></div>
+    <div class="setting-list">
+      <label><span><b>MASTER VOLUME</b><small>0%–2000% · over 100% is boosted</small></span><div><input id="masterVol" type="range" min="0" max="2000" step="10"><output id="masterOut">100%</output></div></label>
+      <label><span><b>MUSIC</b><small>Normal, Nightfall, Halloween, Harvest and unique boss themes</small></span><div><input id="musicVol" type="range" min="0" max="2000" step="10"><output id="musicOut">100%</output></div></label>
+      <label><span><b>SFX</b><small>Bites, impacts, wings, gems, Candy, repairs, alerts</small></span><div><input id="sfxVol" type="range" min="0" max="2000" step="10"><output id="sfxOut">100%</output></div></label>
+      <label class="toggle-row youtube-toggle"><span><b>YOUTUBE MODE · FULL AUDIO OFF</b><small>Stops BugBreak from calling audio playback at all, so iOS can keep YouTube playing.</small></span><input id="silentModeToggle" type="checkbox"></label>
+      <div id="silentStatus" class="settings-note">Game audio is allowed.</div>
+      <label class="toggle-row"><span><b>MUSIC ENABLED</b><small>Biome / ambient music</small></span><input id="musicEnabledToggle" type="checkbox" checked></label>
+      <label class="toggle-row"><span><b>BOSS MUSIC ENABLED</b><small>Boss and final-boss themes</small></span><input id="bossMusicToggle" type="checkbox" checked></label>
+      <label class="toggle-row"><span><b>SFX ENABLED</b><small>Combat and UI sound effects</small></span><input id="sfxEnabledToggle" type="checkbox" checked></label>
+      <label class="toggle-row"><span><b>NORMAL MUSIC</b><small>Ambient soundtrack between bosses</small></span><input id="normalMusicToggle" type="checkbox" checked></label>
+      <label class="toggle-row"><span><b>SCREEN SHAKE</b><small>Combat impact camera shake</small></span><input id="shakeToggle" type="checkbox" checked></label>
+      <label class="toggle-row"><span><b>PERFORMANCE MODE</b><small>Reduces particles and shadow layers on phones/tablets</small></span><input id="perfToggle" type="checkbox"></label>
+    </div>
+    <div class="settings-note">2000% can distort. Start low before testing boosted audio.</div>
+    <button id="ownerAccessBtn" class="owner-access-btn" type="button">OWNER ACCESS</button>
+  </div></section>
+
+  <section id="ownerGate" class="screen"><div class="panel glass small owner-gate-panel">
+    <div class="panel-head"><div><div class="eyebrow">Private tools</div><h3>OWNER ACCESS</h3></div><button id="ownerGateClose" class="icon-btn">✕</button></div>
+    <p class="subcopy">Enter the owner code.</p>
+    <input id="ownerCodeInput" class="owner-code-input" type="password" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" maxlength="32" placeholder="OWNER CODE" />
+    <button id="ownerUnlockBtn" class="primary" type="button">UNLOCK OWNER MENU</button>
+    <div id="ownerGateStatus" class="settings-note">Locked.</div>
+  </div></section>
+
+  <section id="ownerMenu" class="screen"><div class="panel glass wide owner-panel">
+    <div class="panel-head"><div><div class="eyebrow">Code verified · self-only controls</div><h3>OWNER MENU</h3></div><button id="ownerMenuClose" class="icon-btn">✕</button></div>
+    <div class="owner-grid">
+      <div class="owner-card"><h4>RESOURCES</h4>
+        <label>Gems <input id="ownerGemsAmount" type="number" min="0" max="999999999" value="1000"></label><div class="owner-actions"><button data-owner-action="add-gems">ADD</button><button data-owner-action="set-gems">SET</button></div>
+        <label>Candy <input id="ownerCandyAmount" type="number" min="0" max="999999999" value="1000"></label><div class="owner-actions"><button data-owner-action="add-candy">ADD</button><button data-owner-action="set-candy">SET</button></div><label>Storm Shards <input id="ownerStormAmount" type="number" min="0" max="999999999" value="1000"></label><div class="owner-actions"><button data-owner-action="add-storm">ADD</button><button data-owner-action="set-storm">SET</button></div>
+      </div>
+      <div class="owner-card"><h4>ENEMY PROGRESSION</h4>
+        <label>Enemy Level <input id="ownerEnemyLevelAmount" type="number" min="1" max="9999" value="25"></label><div class="owner-actions"><button data-owner-action="set-enemy-level">SET LEVEL</button></div>
+        <label>Enemy XP <input id="ownerEnemyXpAmount" type="number" min="0" max="999999999" value="1000"></label><div class="owner-actions"><button data-owner-action="add-enemy-xp">ADD XP</button><button data-owner-action="set-enemy-xp">SET XP</button></div>
+        <button data-owner-action="unlock-all-enemies" class="primary">UNLOCK ALL ENEMIES</button>
+      </div>
+      <div class="owner-card"><h4>INSECTS</h4>
+        <select id="ownerInsectSelect"><option value="ghost-moth">Ghost Moth</option><option value="harvest-cicada">Harvest Cicada</option><option value="stormglass-dragonfly">Stormglass Dragonfly</option></select>
+        <div class="owner-actions"><button data-owner-action="unlock-insect">UNLOCK SELECTED</button><button data-owner-action="unlock-all-insects">UNLOCK ALL</button></div>
+        <p class="owner-help">Normal insects are always available. This unlocks event reward insects permanently.</p>
+      </div>
+      <div class="owner-card"><h4>UPGRADES</h4>
+        <button data-owner-action="max-upgrades" class="primary">MAX PERMANENT UPGRADES</button>
+        <button data-owner-action="max-halloween">MAX HALLOWEEN UPGRADES</button><button data-owner-action="max-storm">MAX STORM UPGRADES</button>
+        <button data-owner-action="zero-upgrades">ZERO PERMANENT UPGRADES</button>
+      </div>
+      <div class="owner-card"><h4>MODE PROGRESS</h4>
+        <button data-owner-action="clear-normal">MARK NORMAL CLEARED</button>
+        <button data-owner-action="clear-hard">MARK HARD CLEARED</button>
+        <button data-owner-action="clear-halloween">MARK HALLOWEEN CLEARED</button>
+        <button data-owner-action="clear-autumn">MARK HARVEST CLEARED</button><button data-owner-action="clear-storm">MARK STORMFRONT CLEARED</button>
+      </div>
+      <div class="owner-card"><h4>CURRENT ROUND WAVE</h4>
+        <label>Jump to Wave <input id="ownerCurrentWave" type="number" min="1" max="50" value="10"></label>
+        <button data-owner-action="set-current-wave" class="primary">SET CURRENT ROUND WAVE</button>
+        <p class="owner-help">Works during Defender or Enemy Mode. The target wave is rebuilt immediately with its correct biome, roster, enemy stats, bosses, Hard/Event scaling, defender tier, mutations, class wave gates and final-boss music.</p>
+        <div id="ownerRoundSummary" class="owner-summary">Start a round to use this.</div>
+      </div>
+      <div class="owner-card"><h4>OWNER ENEMY OVERRIDE</h4>
+        <select id="ownerEnemyOverrideSelect"></select>
+        <button data-owner-action="force-enemy-now" class="primary">BECOME THIS ENEMY NOW</button>
+        <p class="owner-help">Enemy Mode only. Owner override ignores ownership, Enemy Level and wave gates, so you can use any enemy on any wave.</p>
+      </div>
+      <div class="owner-card"><h4>CREATE BUG</h4>
+        <button id="ownerBugStudioBtn" class="primary" type="button">OPEN CREATE BUG STUDIO</button>
+        <p class="owner-help">Admin-only custom bugs. Up to 30 saved designs.</p>
+      </div>
+      <div class="owner-card"><h4>QUICK POWER</h4>
+        <button data-owner-action="give-everything" class="primary">GIVE EVERYTHING</button>
+        <button data-owner-action="refresh-owner">REFRESH DISPLAY</button>
+        <div id="ownerSummary" class="owner-summary"></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="ownerBugStudio" class="screen"><div class="panel glass wide owner-panel owner-bug-studio">
+    <div class="panel-head"><div><div class="eyebrow">Admin-only custom insect lab</div><h3>CREATE BUG</h3></div><button id="ownerBugStudioClose" class="icon-btn">✕</button></div>
+    <div class="bug-studio-grid">
+      <div class="bug-studio-preview owner-card">
+        <canvas id="ownerBugPreview" width="520" height="300" aria-label="Custom bug preview"></canvas>
+        <div id="ownerBugSlotText" class="owner-summary">0 / 30 BUG SAVES</div>
+      </div>
+      <div class="bug-studio-form owner-card">
+        <label>Name <input id="customBugName" maxlength="24" value="Relic Maker"></label>
+        <label>Body Shape <select id="customBugBody"><option value="oval">Oval</option><option value="round">Round</option><option value="long">Long</option><option value="angular">Angular</option><option value="segmented">Segmented</option></select></label>
+        <label>Head Shape <select id="customBugHead"><option value="round">Round</option><option value="oval">Oval</option><option value="angular">Angular</option><option value="small">Small</option><option value="large">Large</option></select></label>
+        <label>Wings <select id="customBugWings"><option value="none">None</option><option value="short">Short</option><option value="long">Long</option><option value="moth">Moth</option><option value="double">Double</option></select></label>
+        <label>Leg Pairs <input id="customBugLegs" type="number" min="1" max="6" value="3"></label>
+        <label>Antennae <select id="customBugAntennae"><option value="none">None</option><option value="short">Short</option><option value="long">Long</option><option value="clubbed">Clubbed</option></select></label>
+        <label>Primary Color <input id="customBugPrimary" type="color" value="#78c98b"></label>
+        <label>Secondary Color <input id="customBugSecondary" type="color" value="#244c39"></label>
+        <label class="toggle-row"><span><b>GRADIENT</b><small>Blend primary → secondary</small></span><input id="customBugGradient" type="checkbox" checked></label>
+        <label>Transparency <input id="customBugAlpha" type="range" min="20" max="100" value="100"><output id="customBugAlphaOut">100%</output></label>
+        <label>Scale <input id="customBugScale" type="range" min="65" max="165" value="100"><output id="customBugScaleOut">100%</output></label>
+      </div>
+      <div class="bug-studio-form owner-card">
+        <label>HP <input id="customBugHp" type="number" min="25" max="5000" value="220"></label>
+        <label>Damage <input id="customBugDamage" type="number" min="1" max="500" value="34"></label>
+        <label>Speed <input id="customBugSpeed" type="number" min="80" max="600" value="245"></label>
+        <label>Crit % <input id="customBugCrit" type="number" min="0" max="100" value="12"></label>
+        <label>Cooldown <input id="customBugCooldown" type="number" min="1" max="30" step="0.5" value="8"></label>
+        <label>Ability <select id="customBugAbility"><option value="nova">Damage Nova</option><option value="heal">Royal Heal</option><option value="dash">Dash Strike</option><option value="chain">Chain Lightning</option><option value="shield">Stone Shield</option><option value="vamp">Vampire Bite</option><option value="stun">Stun Pulse</option><option value="meteor">Relic Meteor</option></select></label>
+        <label>Ability Name <input id="customBugAbilityName" maxlength="28" value="Relic Burst"></label>
+        <label>Description <input id="customBugDesc" maxlength="90" value="Owner-created custom insect."></label>
+        <div class="owner-actions"><button id="customBugNewBtn" type="button">NEW SLOT</button><button id="customBugSaveBtn" class="primary" type="button">SAVE BUG</button></div>
+      </div>
+      <div class="owner-card bug-saves-card"><h4>SAVED BUGS · ADMIN ONLY</h4><div id="customBugSavedList" class="custom-bug-list"></div></div>
+    </div>
+  </div></section>
+
+  <section id="gameover" class="screen"><div class="panel glass small"><div class="eyebrow">The predators broke through.</div><h3>RUN OVER</h3><div id="runStats" class="run-stats"></div><button id="againBtn" class="primary">RUN IT BACK</button><button id="menuBtn">MAIN MENU</button></div></section>
+  <section id="victory" class="screen"><div class="panel glass small victory"><div class="crown">♛</div><div id="victoryKicker" class="eyebrow">COLONY SIEGE</div><h3 id="victoryTitle">CAMPAIGN CLEARED</h3><p id="victoryCopy">The backyard belongs to the colony.</p><div id="victoryStats" class="run-stats"></div><button id="victoryAgainBtn" class="primary">NEW RUN</button><button id="victoryMenuBtn">MAIN MENU</button></div></section>
+
+  <div id="hud" class="hidden">
+    <div class="hud-top">
+      <div class="barbox glass"><span>YOU</span><div class="bar"><i id="hpBar"></i></div><b id="hpText"></b></div>
+      <div class="wave glass"><small id="modeHud">DAY</small><b><span id="waveText">1</span><em id="waveMax">/50</em></b><span id="enemyCount">0 left</span></div>
+      <div class="barbox glass"><span>NEST</span><div class="bar nest"><i id="nestBar"></i></div><b id="nestText"></b></div>
+    </div>
+    <div class="hud-bottom">
+      <div class="currency glass"><span>Crumbs <b id="crumbsText">0</b></span><span>Gems <b id="gemsText">0</b></span><span id="candyHud">Candy <b id="candyText">0</b></span><span id="stormHud" class="hidden">Shards <b id="stormText">0</b></span><span>LV <b id="levelText">1</b> · XP <b id="xpText">0/55</b></span></div>
+      <div class="xp glass"><i id="xpBar"></i></div>
+      <div class="hud-tools"><button id="roundShopBtn" class="hud-shop glass">UPGRADES</button><button id="pauseBtn" class="icon-btn glass">Ⅱ</button></div>
+    </div>
+    <div id="bossBanner" class="boss-banner"><span>⚠</span><div><small id="bossTag">APEX PREDATOR</small><b id="bossName">GARDEN MANTIS</b></div><span>⚠</span></div>
+    <div id="waveReward" class="wave-reward"></div><div id="eventPill" class="event-pill glass">CALM YARD</div><div id="contractHud" class="contract-hud glass"></div><div id="comboHud" class="combo-hud"><b id="comboText">x0</b><span>COMBO</span></div>
+    <div id="abilityHud" class="ability-hud glass"><b id="abilityName">SPECIAL</b><span id="abilityState">READY</span></div>
+    <div id="evolutionHud" class="evolution-hud glass"><b>EVOLUTION</b><span id="evolutionText">BASE FORM</span></div><div id="enemyModeHud" class="enemy-mode-hud glass hidden"><b id="enemyClassHud">ENEMY</b><span id="enemyProgressHud">LEVEL 1 · WAVE GATE 1</span></div>
+  </div>
+
+  <div id="mobileControls" class="hidden" aria-hidden="true">
+    <div id="stickBase"><div id="stickKnob"></div></div>
+    <div class="action-cluster"><button id="repairBtn" class="action repair">REPAIR<br><small>12</small></button><button id="specialBtn" class="action special">SPECIAL</button><button id="dashBtn" class="action dash">DASH</button><button id="biteBtn" class="action bite">BITE</button></div>
+  </div>
+</div>
+<script src="data.js?v=200"></script><script src="audio.js?v=200"></script><script src="ui.js?v=200"></script><script src="game.js?v=200"></script><script src="enemy-mode.js?v=200"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}</script>
+</body>
+</html>

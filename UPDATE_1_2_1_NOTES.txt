@@ -1,0 +1,12 @@
+BUGBREAK Update 1.2.1 hotfix
+
+UPLOAD THESE FILES TO THE SAME GITHUB REPO ROOT AND REPLACE FILES WITH THE SAME NAMES.
+DO NOT DELETE THE OTHER GAME FILES.
+
+Fixes:
+- Enemy Mode start button now uses a fail-safe loader.
+- Service worker uses fresh HTML/JS/CSS so stale cached code cannot break Enemy Mode.
+- YouTube Mode fully blocks BugBreak audio playback calls.
+- Separate Music, Boss Music, and SFX enable toggles.
+- New Update 1 app icon.
+- Save key remains bugbreak-update1-save.

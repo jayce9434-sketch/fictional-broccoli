@@ -1,0 +1,5 @@
+BUGBREAK Update 1.2.6 — Owner Wave Control
+
+Owner Menu -> CURRENT ROUND WAVE -> SET CURRENT ROUND WAVE.
+Only affects an active round. Target is clamped to the mode maximum.
+The wave is rebuilt using all normal scaling and mode rules.

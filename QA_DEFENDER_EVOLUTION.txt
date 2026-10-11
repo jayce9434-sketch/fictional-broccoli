@@ -1,0 +1,8 @@
+W1 {"running":true,"mode":"normal","wave":1,"maxWave":50,"enemyClass":"garden-ant","enemyLevel":1,"enemyXP":0,"xpRun":0,"bots":[{"type":"ant","hp":139.4,"maxHp":139.4,"damage":15.120000000000001,"dead":false,"mutations":[],"dashUnlocked":false,"specialUnlocked":false,"lastAction":"BITE","bites":0,"dashUses":0,"specialUses":0},{"type":"fly","hp":115.60000000000001,"maxHp":115.60000000000001,"damage":12.88,"dead":false,"mutations":[],"dashUnlocked":false,"specialUnlocked":false,"lastAction":"BITE","bites":0,"dashUses":0,"specialUses":0},{"type":"termite","hp":190.4,"maxHp":190.4,"damage":13.440000000000001,"dead":false,"mutations":[],"dashUnlocked":false,"specialUnlocked":false,"lastAction":"BITE","bites":0,"dashUses":0,"specialUses":0}],"nest":{"hp":3000,"maxHp":3000},"attackers":3}
+W1 real bite OK
+XP after bite 0 -> 3
+W2 dash OK
+W5 specials OK [ 'ant', 'bee', 'ladybug' ]
+W6 mutations [ [ 'rapid' ], [ 'prism' ], [ 'feral' ] ]
+W36 mutation cap OK
+PASS
